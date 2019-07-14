@@ -15,6 +15,8 @@ public class Library {
     private List<Borrowing> borrowing = new ArrayList<>();
     private static Library instance = new Library();
 
+    private List<BookStack> bookStacks = new ArrayList<>();
+
     private Library() {}
 
     public static Library getInstance() {
