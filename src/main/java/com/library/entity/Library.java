@@ -11,7 +11,7 @@ import java.util.Set;
 public class Library {
 
     private List<Book> booksInLibrary = new ArrayList<>();
-    private Set<String> titlesInLibrary = new HashSet<>();
+    private Set<BookStack> titlesInLibrary = new HashSet<>();
     private List<Borrowing> borrowing = new ArrayList<>();
     private static Library instance = new Library();
 

@@ -24,10 +24,10 @@ public class Main {
 
 //        libraryService.borrowBook(janek, "Clean Code");
 //        libraryService.borrowBook(janek, "Clean Code");
-        libraryService.borrowBook(janek, "Effective Java");
+        libraryService.borrowBook(janek, "Effective Java", "Joshua Bloch");
 
         System.out.println("==========");
-        List<Book> books = bookStack.getBooksByTitle("Clean Code");
+        List<Book> books = bookStack.containBooks("Clean Code", "Robert C Martin");
         books.forEach(b -> System.out.println(b.getId() + ", " + b.getTitle()));
 
     }
