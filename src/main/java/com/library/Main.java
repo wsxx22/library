@@ -1,30 +1,25 @@
 package com.library;
 
 import com.library.entity.Book;
-import com.library.entity.CleanCodeBook;
 import com.library.entity.Reader;
 import com.library.service.LibraryService;
-import com.library.util.BookTitle;
 
 public class Main {
 
     public static void main(String[] args) {
 
         LibraryService libraryService = new LibraryService();
-
-        Book cleanCode = new CleanCodeBook("Robert C Martin", BookTitle.CLEANCODE);
-        Book cleanCode2 = new CleanCodeBook("Robert C Martin", BookTitle.CLEANCODE);
-        Book effectiveJava = new CleanCodeBook("Joshua Bloch", BookTitle.EFFECTIVE_JAVA);
-
-        libraryService.addBook(cleanCode);
-        libraryService.addBook(cleanCode2);
-        libraryService.addBook(effectiveJava);
-
         Reader janek = new Reader(1,"Janek", 30);
+        Reader marek = new Reader(2,"Janek2", 40);
+
+        libraryService.addBook(new Book("Robert C Martin", "Clean Code"));
+        libraryService.addBook(new Book("Robert C Martin", "Clean Code"));
+        libraryService.addBook(new Book("Joshua Bloch", "Effective Java"));
+
 
         System.out.println("=====before borrowed=====");
-        for (BookTitle bt : libraryService.getTitlesInLibrary()) {
-            System.out.println(bt.getTitle);
+        for (String bt : libraryService.getTitlesInLibrary()) {
+            System.out.println(bt);
         }
         System.out.println("****************");
         for (Book b : libraryService.getBooksInLibrary()) {
@@ -34,14 +29,16 @@ public class Main {
         System.out.println();
 
 
+        libraryService.borrowBook(janek, "Clean Code");
+        libraryService.borrowBook(janek, "Clean Code");
+        libraryService.borrowBook(janek, "Effective Java");
 
-        libraryService.borrowBook(janek, cleanCode);
-        libraryService.borrowBook(janek, cleanCode2);
-        libraryService.borrowBook(janek, effectiveJava);
+        libraryService.borrowBook(marek, "Clean Code");
+
 
         System.out.println("=====after borrowed=====");
-        for (BookTitle bt : libraryService.getTitlesInLibrary()) {
-            System.out.println(bt.getTitle);
+        for (String bt : libraryService.getTitlesInLibrary()) {
+            System.out.println(bt);
         }
         System.out.println("****************");
         for (Book b : libraryService.getBooksInLibrary()) {
@@ -49,13 +46,6 @@ public class Main {
         }
         System.out.println("=====after borrowed=====");
 
-//        readerService.borrowBook(janek, cleanCode);
-//        readerService.borrowBook(janek, effectiveJava);
-
-
-
-
     }
-
 
 }

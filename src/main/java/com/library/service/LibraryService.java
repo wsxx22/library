@@ -3,16 +3,18 @@ package com.library.service;
 import com.library.entity.Book;
 import com.library.entity.Borrowing;
 import com.library.entity.Reader;
-import com.library.util.BookTitle;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Getter
 public class LibraryService {
 
-    private Set<BookTitle> titlesInLibrary = new HashSet<>();
+    private Set<String> titlesInLibrary = new HashSet<>();
     private List<Book> booksInLibrary = new ArrayList<>();
 
     private List<Borrowing> borrowing = new ArrayList<>();
@@ -22,9 +24,10 @@ public class LibraryService {
         booksInLibrary.add(book);
     }
 
-    public void borrowBook (Reader reader, Book book) {
+    public void borrowBook (Reader reader, String title) {
 
-        if (titlesInLibrary.contains(book.getTitle()) & isTitleBorrowedByReader(reader, book)) {
+        if (titlesInLibrary.contains(title) & isTitleBorrowedByReader(reader, title)) {
+            Book book = booksInLibrary.stream().filter(b -> b.getTitle().equals(title)).findAny().get();
             booksInLibrary.remove(book);
             reader.getBorrowedBooks().add(book);
 
@@ -32,12 +35,12 @@ public class LibraryService {
                 titlesInLibrary.remove(book.getTitle());
             }
             borrowing.add(new Borrowing(reader, LocalDateTime.now(), LocalDateTime.now()));
-            System.out.println(book.getId() + ", ksiazka " + book.getTitle().getTitle + ", wypozyczona przez " + reader.getName());
+            System.out.println(book.getId() + ", ksiazka " + book.getTitle() + ", wypozyczona przez " + reader.getName());
         }
     }
 
-    private boolean isTitleBorrowedByReader (Reader reader, Book book) {
-        return reader.getBorrowedBooks().stream().noneMatch(b -> b.getTitle().equals(book.getTitle()));
+    private boolean isTitleBorrowedByReader (Reader reader, String title) {
+        return reader.getBorrowedBooks().stream().noneMatch(b -> b.getTitle().equals(title));
     }
 
 
