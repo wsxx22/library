@@ -8,7 +8,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-        Library library = Library.getInstance();
+        Library library = new Library();
 
         Reader janek = new Reader(1,"Janek", 30);
         Reader marek = new Reader(2,"Marek", 40);
