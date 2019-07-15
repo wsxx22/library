@@ -10,7 +10,7 @@ public class Library {
 
     private Set<BookStack> titlesInLibrary = new HashSet<>();
     private List<Borrowing> borrowing = new ArrayList<>();
-    
+
     public void addBook (Book book) {
         BookStack bookStack = new BookStack(book.getTitle(), book.getAuthor());
         bookStack.addId(book.getId());
@@ -34,7 +34,7 @@ public class Library {
 
         bookStack.getId().remove(book.getId());
 
-        borrowing.add(new Borrowing(reader, book, LocalDateTime.now(), LocalDateTime.now().plusWeeks(1)));
+        borrowing.add(new Borrowing(reader, book, LocalDateTime.now()));
 
         return bookStack;
     }
