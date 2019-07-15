@@ -8,8 +8,12 @@ import java.util.UUID;
 @Getter
 public class Book {
 
-    private final UUID id = UUID.randomUUID();
-    private String author;
+    private UUID id = UUID.randomUUID();
     private String title;
+    private String author;
 
+    public Book(String author, String title) {
+        this.author = author;
+        this.title = title;
+    }
 }

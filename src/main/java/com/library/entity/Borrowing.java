@@ -12,6 +12,7 @@ public class Borrowing {
 
     private final UUID id = UUID.randomUUID();
     private Reader reader;
+    private Book book;
     private LocalDateTime dateTimeStartBorrowing;
     private LocalDateTime dateTimeEndBorrowing;
 
