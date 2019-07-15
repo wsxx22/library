@@ -1,12 +1,12 @@
 package com.library.entity;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Getter
-
 public class Borrowing {
 
     private final UUID id = UUID.randomUUID();
@@ -15,11 +15,13 @@ public class Borrowing {
     private LocalDateTime dateTimeStartBorrowing;
     private LocalDateTime dateTimeEndBorrowing;
 
-
     public Borrowing(Reader reader, Book book, LocalDateTime dateTimeStartBorrowing) {
         this.reader = reader;
         this.book = book;
         this.dateTimeStartBorrowing = dateTimeStartBorrowing;
-        this.dateTimeEndBorrowing = null;
+    }
+
+    public void setDateTimeEndBorrowing(LocalDateTime dateTimeEndBorrowing) {
+        this.dateTimeEndBorrowing = dateTimeEndBorrowing;
     }
 }

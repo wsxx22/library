@@ -29,8 +29,8 @@ public class Library {
     }
 
     private BookStack addBorrowToReaderList(Reader reader, BookStack bookStack) {
-        Book book = new Book(
-                bookStack.getId().iterator().next(), bookStack.getTitle(), bookStack.getAuthor());
+
+        Book book = new Book(bookStack.getId().iterator().next(), bookStack.getTitle(), bookStack.getAuthor());
 
         bookStack.getId().remove(book.getId());
 
