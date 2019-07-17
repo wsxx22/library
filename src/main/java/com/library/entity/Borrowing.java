@@ -1,7 +1,6 @@
 package com.library.entity;
 
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -24,4 +23,5 @@ public class Borrowing {
     public void setDateTimeEndBorrowing(LocalDateTime dateTimeEndBorrowing) {
         this.dateTimeEndBorrowing = dateTimeEndBorrowing;
     }
+
 }

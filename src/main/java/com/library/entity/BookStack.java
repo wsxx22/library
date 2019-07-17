@@ -13,14 +13,19 @@ public class BookStack {
     private String author;
 
     private List<UUID> id = new ArrayList<>();
+    private List<Borrowing> borrowing = new ArrayList<>();
 
     public BookStack(String title, String author) {
         this.title = title;
         this.author = author;
     }
 
-    public void addId (UUID uuid) {
-        id.add(uuid);
+    public boolean addId (UUID uuid) {
+        return id.add(uuid);
+    }
+
+    public void addBorrowing(Borrowing borrowing) {
+        this.borrowing.add(borrowing);
     }
 
 }
