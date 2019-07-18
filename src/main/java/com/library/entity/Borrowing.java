@@ -7,7 +7,6 @@ import java.util.UUID;
 
 @Getter
 public class Borrowing {
-
     private final UUID id = UUID.randomUUID();
     private Reader reader;
 //    private Book book;

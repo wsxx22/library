@@ -1,5 +1,6 @@
 package com.library.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.util.ArrayList;
@@ -7,23 +8,16 @@ import java.util.List;
 import java.util.UUID;
 
 @Getter
+@AllArgsConstructor
 public class BookStack {
-
     private String title;
     private String author;
+    private final List<UUID> id = new ArrayList<>();
+    private final List<Borrowing> borrowing = new ArrayList<>();
 
-    private List<UUID> id = new ArrayList<>();
-    private List<Borrowing> borrowing = new ArrayList<>();
-
-    public BookStack(String title, String author) {
-        this.title = title;
-        this.author = author;
+    public void addId (UUID uuid) {
+        id.add(uuid);
     }
-
-    public boolean addId (UUID uuid) {
-        return id.add(uuid);
-    }
-
     public void addBorrowing(Borrowing borrowing) {
         this.borrowing.add(borrowing);
     }
