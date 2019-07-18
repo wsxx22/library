@@ -28,4 +28,9 @@ public class BookStack {
         this.borrowing.add(borrowing);
     }
 
+//    public Book getBook (BookStack bookStack) {
+//        Book book = new Book(bookStack.getId().iterator().next(), bookStack.getTitle(), bookStack.getAuthor());
+//        id.remove(book.getId());
+//        return book;
+//    }
 }

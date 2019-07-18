@@ -22,5 +22,4 @@ public class Main {
         library.borrowBook(janek, "Effective Java", "Joshua Bloch");
 
     }
-
 }
