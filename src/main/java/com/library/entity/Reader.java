@@ -4,7 +4,7 @@ import lombok.Value;
 
 @Value
 public class Reader {
-    private int id;
+    private Long id;
     private String name;
     private int age;
 }

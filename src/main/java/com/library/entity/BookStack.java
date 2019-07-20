@@ -3,6 +3,7 @@ package com.library.entity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -27,4 +28,10 @@ public class BookStack {
 //        id.remove(book.getId());
 //        return book;
 //    }
+
+    public BookStack updateEndDateTimeBorrowing (LocalDateTime localDateTime) {
+        Borrowing borrowing = this.getBorrowing().get(0);
+        borrowing.setDateTimeEndBorrowing(localDateTime);
+        return this;
+    }
 }
