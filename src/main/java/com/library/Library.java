@@ -21,9 +21,9 @@ public class Library {
 
     public void borrowBook(Reader reader, String title, String author) {
         getBookStackIfExists(title, author)
-                .filter(bookStack -> bookStack.isTitleBorrowedByReader(reader, bookStack))
+                .filter(bookStack -> bookStack.isTitleBorrowedByReader(reader))
                 .map(bookStack -> addBorrow(reader, bookStack))
-                .filter(bookStack -> bookStack.isEmptyListId(bookStack))
+                .filter(BookStack::isEmptyListId)
                 .map(bookStack -> titlesInLibrary.remove(bookStack));
     }
 
@@ -33,8 +33,8 @@ public class Library {
         }
 
         titlesInLibrary.stream()
-                .filter(bookStack -> bookStack.isReaderInBorrowingExists(reader, bookStack))
-                .filter(bookStack -> bookStack.isNullEndDateTimeBorrowing(bookStack))
+                .filter(bookStack -> bookStack.isReaderInBorrowingExists(reader))
+                .filter(BookStack::isNullEndDateTimeBorrowing)
                 .findAny()
                 .ifPresent(bookStack -> {
                     bookStack.addId(book.getId());
@@ -48,17 +48,8 @@ public class Library {
                 .noneMatch(bookStack -> bookStack.getAuthor().equals(book.getAuthor()));
     }
 
-//    private boolean isBorrowReader(Reader reader, BookStack bookStack) {
-//        return bookStack.isReaderInBorrowingExists(reader, bookStack);
-//    }
-
-//    private boolean isNullDateTimeEndBorrowing(BookStack bookStack) {
-//        return bookStack.getBorrowing().stream()
-//                .anyMatch(borrowing -> borrowing.getDateTimeEndBorrowing() == null);
-//    }
-
     private BookStack addBorrow(Reader reader, BookStack bookStack) {
-        bookStack.removeIdAfterBorrow(bookStack);
+        bookStack.removeIdAfterBorrow();
         bookStack.addBorrowing(new Borrowing(reader));
         return bookStack;
     }
@@ -69,12 +60,6 @@ public class Library {
                 .filter(bookStack -> bookStack.getAuthor().equals(author))
                 .findAny();
     }
-
-//    private boolean isTitleBorrowedByReader(Reader reader, BookStack bookStack) {
-//        return bookStack.getBorrowing().stream()
-//                .filter(borrowing -> borrowing.getReader().getName().equals(reader.getName()))
-//                .anyMatch(borrowing -> borrowing.getDateTimeEndBorrowing() == null);
-//    }
 
     private boolean addBookStack(String title, String author) {
         BookStack bookStack = new BookStack(title, author);

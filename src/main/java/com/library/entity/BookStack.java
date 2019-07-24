@@ -28,32 +28,26 @@ public class BookStack {
         this.borrowing.add(borrowing);
     }
 
-//    public Book getBook (BookStack bookStack) {
-//        Book book = new Book(bookStack.getId().iterator().next(), bookStack.getTitle(), bookStack.getAuthor());
-//        idList.remove(book.getId());
-//        return book;
-//    }
-
-    public boolean isEmptyListId(BookStack bookStack) {
-        return bookStack.borrowing.isEmpty();
+    public boolean isEmptyListId() {
+        return this.borrowing.isEmpty();
     }
 
-    public void removeIdAfterBorrow(BookStack bookStack) {
-        bookStack.borrowing.remove(bookStack.borrowing.get(0));
+    public void removeIdAfterBorrow() {
+        this.borrowing.remove(this.borrowing.get(0));
     }
 
-    public boolean isReaderInBorrowingExists(Reader reader, BookStack bookStack) {
-        return bookStack.borrowing.stream()
+    public boolean isReaderInBorrowingExists(Reader reader) {
+        return this.borrowing.stream()
                 .anyMatch(borrowing -> borrowing.getReader().getId().equals(reader.getId()));
     }
 
-    public boolean isNullEndDateTimeBorrowing(BookStack bookStack) {
-        return bookStack.borrowing.stream()
+    public boolean isNullEndDateTimeBorrowing() {
+        return this.borrowing.stream()
                 .anyMatch(borrowing -> borrowing.getDateTimeEndBorrowing() == null);
     }
 
-    public boolean isTitleBorrowedByReader(Reader reader, BookStack bookStack) {
-        return bookStack.borrowing.stream()
+    public boolean isTitleBorrowedByReader(Reader reader) {
+        return this.borrowing.stream()
                 .filter(borrowing -> borrowing.getReader().getName().equals(reader.getName()))
                 .anyMatch(borrowing -> borrowing.getDateTimeEndBorrowing() == null);
     }
