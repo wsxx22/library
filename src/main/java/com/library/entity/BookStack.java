@@ -16,7 +16,7 @@ public class BookStack {
     private final List<UUID> id = new ArrayList<>();
     private final List<Borrowing> borrowing = new ArrayList<>();
 
-    public void addId (UUID uuid) {
+    public void addId(UUID uuid) {
         id.add(uuid);
     }
     public void addBorrowing(Borrowing borrowing) {
@@ -29,9 +29,17 @@ public class BookStack {
 //        return book;
 //    }
 
-    public BookStack updateEndDateTimeBorrowing (LocalDateTime localDateTime) {
+    public BookStack updateEndDateTimeBorrowing(LocalDateTime localDateTime) {
         Borrowing borrowing = this.getBorrowing().get(0);
         borrowing.setDateTimeEndBorrowing(localDateTime);
         return this;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getAuthor() {
+        return author;
     }
 }

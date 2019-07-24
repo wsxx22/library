@@ -9,17 +9,15 @@ import java.util.UUID;
 public class Borrowing {
     private final UUID id = UUID.randomUUID();
     private Reader reader;
-//    private Book book;
     private final LocalDateTime dateTimeStartBorrowing;
     private LocalDateTime dateTimeEndBorrowing;
 
-    public Borrowing(Reader reader, LocalDateTime dateTimeStartBorrowing) {
+    public Borrowing(Reader reader) {
         this.reader = reader;
-//        this.book = book;
-        this.dateTimeStartBorrowing = dateTimeStartBorrowing;
+        this.dateTimeStartBorrowing = LocalDateTime.now();
     }
 
-    public void setDateTimeEndBorrowing(LocalDateTime dateTimeEndBorrowing) {
+    public final void setDateTimeEndBorrowing(LocalDateTime dateTimeEndBorrowing) {
         this.dateTimeEndBorrowing = dateTimeEndBorrowing;
     }
 }

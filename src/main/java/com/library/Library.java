@@ -7,24 +7,19 @@ import com.library.entity.Reader;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Getter
 public class Library {
 
     private Set<BookStack> titlesInLibrary = new HashSet<>();
 
-    public void addBook (Book book) {
-        titlesInLibrary.stream()
-                .filter(b -> b.getTitle().equals(book.getTitle()))
-                .filter(b -> b.getAuthor().equals(book.getAuthor()))
-                .findAny()
-                .ifPresentOrElse(bookStack -> bookStack.addId(book.getId()), () -> addBookStack(book));
+    public void addBook(String title, String author) {
+        getBookStackIfExists(title, title)
+                .ifPresent(bookStack -> addBookStack(title, author));
     }
 
-    public void borrowBook (Reader reader, String title, String author) {
+    public void borrowBook(Reader reader, String title, String author) {
         getBookStackIfExists(title, author)
                 .filter(bookStack -> isTitleBorrowedByReader(reader, bookStack))
                 .map(bookStack -> addBorrow(reader, bookStack))
@@ -32,38 +27,39 @@ public class Library {
                 .map(bookStack -> titlesInLibrary.remove(bookStack));
     }
 
-    public void returnBook (Reader reader, Book book) {
-        if (isNotBookInBookStack(book)) {
+    public void returnBook(Reader reader, Book book) {
+        if (isBookInBookStackExists(book)) {
             titlesInLibrary.add(new BookStack(book.getTitle(), book.getAuthor()));
         }
-//        Optional<BookStack> bookStackOptional = getBookStackIfExists(book.getTitle(), book.getAuthor());
 
         getBookStackIfExists(book.getTitle(), book.getAuthor())
                 .filter(bookStack -> isBorrowReader(reader, bookStack))
                 .filter(this::isNullDateTimeEndBorrowing)
-                .map(bookStack -> bookStack.updateEndDateTimeBorrowing(LocalDateTime.now()))
-                .ifPresent(bookStack -> bookStack.addId(book.getId()));
-//        bookStackOptional.get().getBorrowing().get(0).setDateTimeEndBorrowing(LocalDateTime.now());
+                .ifPresent(bookStack -> {
+                    bookStack.addId(book.getId());
+                    bookStack.updateEndDateTimeBorrowing(LocalDateTime.now());
+                });
     }
 
-    private boolean isNotBookInBookStack(Book book) {
-        return titlesInLibrary.stream().filter(bookStack -> !bookStack.getTitle().equals(book.getTitle()))
+    private boolean isBookInBookStackExists(Book book) {
+        return titlesInLibrary.stream()
+                .filter(bookStack -> !bookStack.getTitle().equals(book.getTitle()))
                 .noneMatch(bookStack -> bookStack.getAuthor().equals(book.getAuthor()));
     }
 
-    private boolean isBorrowReader (Reader reader, BookStack bookStack) {
+    private boolean isBorrowReader(Reader reader, BookStack bookStack) {
         return bookStack.getBorrowing().stream()
                 .anyMatch(borrowing -> borrowing.getReader().getId().equals(reader.getId()));
     }
 
-    private boolean isNullDateTimeEndBorrowing (BookStack bookStack) {
+    private boolean isNullDateTimeEndBorrowing(BookStack bookStack) {
         return bookStack.getBorrowing().stream()
                 .anyMatch(borrowing -> borrowing.getDateTimeEndBorrowing() == null);
     }
 
     private BookStack addBorrow(Reader reader, BookStack bookStack) {
         bookStack.getId().remove(bookStack.getId().get(0));
-        bookStack.addBorrowing(new Borrowing(reader, LocalDateTime.now()));
+        bookStack.addBorrowing(new Borrowing(reader));
         return bookStack;
     }
 
@@ -71,19 +67,18 @@ public class Library {
         return titlesInLibrary.stream()
                 .filter(bookStack -> bookStack.getTitle().equals(title))
                 .filter(bookStack -> bookStack.getAuthor().equals(author))
-                .filter(bookStack -> bookStack.getId().size() > 0)
                 .findAny();
     }
 
-    private boolean isTitleBorrowedByReader (Reader reader, BookStack bookStack) {
+    private boolean isTitleBorrowedByReader(Reader reader, BookStack bookStack) {
         return bookStack.getBorrowing().stream()
                 .filter(borrowing -> borrowing.getReader().getName().equals(reader.getName()))
                 .anyMatch(borrowing -> borrowing.getDateTimeEndBorrowing() == null);
     }
 
-    private boolean addBookStack(Book book) {
-            BookStack bookStack = new BookStack(book.getTitle(), book.getAuthor());
-            bookStack.addId(book.getId());
+    private boolean addBookStack(String title, String author) {
+        BookStack bookStack = new BookStack(title, author);
+        bookStack.addId(UUID.randomUUID());
         return titlesInLibrary.add(bookStack);
     }
 }
