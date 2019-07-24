@@ -7,6 +7,7 @@ import lombok.Getter;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 @Getter
@@ -19,41 +20,42 @@ public class BookStack {
     private final List<UUID> idList = new ArrayList<>();
 
     @Getter(AccessLevel.NONE)
-    private final List<Borrowing> borrowing = new ArrayList<>();
+    private final List<Borrowing> borrowings = new ArrayList<>();
 
     public void addId(UUID uuid) {
         idList.add(uuid);
     }
     public void addBorrowing(Borrowing borrowing) {
-        this.borrowing.add(borrowing);
+        this.borrowings.add(borrowing);
     }
 
     public boolean isEmptyListId() {
-        return this.borrowing.isEmpty();
+        return this.borrowings.isEmpty();
     }
 
     public void removeIdAfterBorrow() {
-        this.borrowing.remove(this.borrowing.get(0));
+        this.borrowings.remove(0);
     }
 
     public boolean isReaderInBorrowingExists(Reader reader) {
-        return this.borrowing.stream()
+        return this.borrowings.stream()
                 .anyMatch(borrowing -> borrowing.getReader().getId().equals(reader.getId()));
     }
 
     public boolean isNullEndDateTimeBorrowing() {
-        return this.borrowing.stream()
-                .anyMatch(borrowing -> borrowing.getDateTimeEndBorrowing() == null);
+        return this.borrowings.stream()
+                .map(Borrowing::getDateTimeEndBorrowing)
+                .anyMatch(Objects::isNull);
     }
 
     public boolean isTitleBorrowedByReader(Reader reader) {
-        return this.borrowing.stream()
+        return this.borrowings.stream()
                 .filter(borrowing -> borrowing.getReader().getName().equals(reader.getName()))
                 .anyMatch(borrowing -> borrowing.getDateTimeEndBorrowing() == null);
     }
 
     public void updateEndDateTimeBorrowing(LocalDateTime localDateTime) {
-        Borrowing borrowing = this.borrowing.get(0);
+        Borrowing borrowing = this.borrowings.get(0);
         borrowing.setDateTimeEndBorrowing(localDateTime);
     }
 }

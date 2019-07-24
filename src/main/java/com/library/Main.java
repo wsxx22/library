@@ -1,7 +1,6 @@
 package com.library;
 
 import com.library.entity.Reader;
-import org.openjdk.jol.vm.VM;
 
 public class Main {
 
@@ -16,7 +15,6 @@ public class Main {
         library.addBook("Robert C Martin", "Clean Code");
         library.addBook("Joshua Bloch", "Effective Java");
 
-        System.out.println(VM.current().details());
         library.borrowBook(janek, "Effective Java", "Joshua Bloch");
     }
 }

@@ -4,12 +4,13 @@ import com.library.entity.Book;
 import com.library.entity.BookStack;
 import com.library.entity.Borrowing;
 import com.library.entity.Reader;
-import lombok.Getter;
 
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.HashSet;
+import java.util.Optional;
+import java.util.Set;
+import java.util.UUID;
 
-@Getter
 public class Library {
 
     private Set<BookStack> titlesInLibrary = new HashSet<>();
@@ -24,7 +25,7 @@ public class Library {
                 .filter(bookStack -> bookStack.isTitleBorrowedByReader(reader))
                 .map(bookStack -> addBorrow(reader, bookStack))
                 .filter(BookStack::isEmptyListId)
-                .map(bookStack -> titlesInLibrary.remove(bookStack));
+                .ifPresent(bookStack -> titlesInLibrary.remove(bookStack));
     }
 
     public void returnBook(Reader reader, Book book) {
@@ -61,9 +62,9 @@ public class Library {
                 .findAny();
     }
 
-    private boolean addBookStack(String title, String author) {
+    private void addBookStack(String title, String author) {
         BookStack bookStack = new BookStack(title, author);
         bookStack.addId(UUID.randomUUID());
-        return titlesInLibrary.add(bookStack);
+        titlesInLibrary.add(bookStack);
     }
 }
