@@ -22,19 +22,22 @@ public class BookStack {
     @Getter(AccessLevel.NONE)
     private final List<Borrowing> borrowings = new ArrayList<>();
 
+    public BookStack(String title, String author, UUID uuid) {
+        this.title = title;
+        this.author = author;
+        idList.add(uuid);
+    }
+
     public void addId(UUID uuid) {
         idList.add(uuid);
     }
+
     public void addBorrowing(Borrowing borrowing) {
         this.borrowings.add(borrowing);
     }
 
     public boolean isEmptyListId() {
         return this.borrowings.isEmpty();
-    }
-
-    public void removeIdAfterBorrow() {
-        this.borrowings.remove(0);
     }
 
     public boolean isReaderInBorrowingExists(Reader reader) {
@@ -50,7 +53,7 @@ public class BookStack {
 
     public boolean isTitleBorrowedByReader(Reader reader) {
         return this.borrowings.stream()
-                .filter(borrowing -> borrowing.getReader().getName().equals(reader.getName()))
+                .filter(borrowing -> !borrowing.getReader().getName().equals(reader.getName()))
                 .anyMatch(borrowing -> borrowing.getDateTimeEndBorrowing() == null);
     }
 

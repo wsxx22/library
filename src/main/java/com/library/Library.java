@@ -50,7 +50,6 @@ public class Library {
     }
 
     private BookStack addBorrow(Reader reader, BookStack bookStack) {
-        bookStack.removeIdAfterBorrow();
         bookStack.addBorrowing(new Borrowing(reader));
         return bookStack;
     }
@@ -63,8 +62,7 @@ public class Library {
     }
 
     private void addBookStack(String title, String author) {
-        BookStack bookStack = new BookStack(title, author);
-        bookStack.addId(UUID.randomUUID());
+        BookStack bookStack = new BookStack(title, author, UUID.randomUUID());
         titlesInLibrary.add(bookStack);
     }
 }

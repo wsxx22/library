@@ -8,13 +8,14 @@ public class Main {
 
         Library library = new Library();
 
-        Reader janek = new Reader(1L,"Janek", 30);
-        Reader marek = new Reader(2L,"Marek", 40);
+        Reader janek = new Reader(1L, "Janek", 30);
+        Reader marek = new Reader(2L, "Marek", 40);
 
-        library.addBook("Robert C Martin", "Clean Code");
-        library.addBook("Robert C Martin", "Clean Code");
-        library.addBook("Joshua Bloch", "Effective Java");
+//        library.addBook("Robert C Martin", "Clean Code");
+//        library.addBook("Robert C Martin", "Clean Code");
+//        library.addBook("Joshua Bloch", "Effective Java");
+//
+//        library.borrowBook(janek, "Effective Java", "Joshua Bloch");
 
-        library.borrowBook(janek, "Effective Java", "Joshua Bloch");
     }
 }
